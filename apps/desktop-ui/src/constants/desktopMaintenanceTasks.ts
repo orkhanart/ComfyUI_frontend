@@ -1,7 +1,7 @@
 import { PrimeIcons } from '@primevue/core'
 
-import type { MaintenanceTask } from '@/types/desktop/maintenanceTypes'
-import { electronAPI } from '@/utils/envUtil'
+import type { MaintenanceTask } from '@desktop/types/desktop/maintenanceTypes'
+import { electronAPI } from '@desktop/utils/envUtil'
 
 const electron = electronAPI()
 

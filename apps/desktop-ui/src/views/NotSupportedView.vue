@@ -2,11 +2,7 @@
   <BaseViewTemplate>
     <div class="sad-container">
       <!-- Right side image -->
-      <img
-        class="sad-girl"
-        src="/assets/images/sad_girl.png"
-        alt="Sad girl illustration"
-      />
+      <img class="sad-girl" src="/assets/images/sad_girl.png" alt="" />
 
       <div class="no-drag sad-text flex items-center">
         <div class="flex flex-col gap-8 p-8 min-w-110">
@@ -56,10 +52,9 @@
 </template>
 
 <script setup lang="ts">
+import BaseViewTemplate from '@desktop/views/templates/BaseViewTemplate.vue'
 import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
-
-import BaseViewTemplate from '@/views/templates/BaseViewTemplate.vue'
 
 const openDocs = () => {
   window.open(

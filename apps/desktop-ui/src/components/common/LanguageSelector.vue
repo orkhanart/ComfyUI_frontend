@@ -27,11 +27,10 @@
 </template>
 
 <script setup lang="ts">
+import { i18n, loadLocale, st } from '@desktop/i18n'
 import Select from 'primevue/select'
 import type { SelectChangeEvent } from 'primevue/select'
 import { computed, ref, watch } from 'vue'
-
-import { i18n, loadLocale, st } from '@/i18n'
 
 type VariantKey = 'dark' | 'light'
 type SizeKey = 'small' | 'large'

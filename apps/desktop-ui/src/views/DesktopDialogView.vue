@@ -26,12 +26,12 @@
 
 <script setup lang="ts">
 import { normalizeI18nKey } from '@comfyorg/shared-frontend-utils/formatUtil'
+import { getDialog } from '@desktop/constants/desktopDialogs'
+import type { DialogAction } from '@desktop/constants/desktopDialogs'
+import { t } from '@desktop/i18n'
+import { electronAPI } from '@desktop/utils/envUtil'
 import Button from 'primevue/button'
 import { useRoute } from 'vue-router'
-
-import { type DialogAction, getDialog } from '@/constants/desktopDialogs'
-import { t } from '@/i18n'
-import { electronAPI } from '@/utils/envUtil'
 
 const route = useRoute()
 const { id, title, message, buttons } = getDialog(route.params.dialogId)

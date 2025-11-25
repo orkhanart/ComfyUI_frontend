@@ -42,10 +42,9 @@
 </template>
 
 <script setup lang="ts">
+import BaseViewTemplate from '@desktop/views/templates/BaseViewTemplate.vue'
 import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
-
-import BaseViewTemplate from '@/views/templates/BaseViewTemplate.vue'
 
 const openGitDownloads = () => {
   window.open('https://git-scm.com/downloads/', '_blank')

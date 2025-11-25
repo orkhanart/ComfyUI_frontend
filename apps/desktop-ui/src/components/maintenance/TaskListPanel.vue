@@ -40,17 +40,16 @@
 </template>
 
 <script setup lang="ts">
+import { t } from '@desktop/i18n'
+import { useMaintenanceTaskStore } from '@desktop/stores/maintenanceTaskStore'
+import type {
+  MaintenanceFilter,
+  MaintenanceTask
+} from '@desktop/types/desktop/maintenanceTypes'
 import { PrimeIcons } from '@primevue/core/api'
 import { useConfirm, useToast } from 'primevue'
 import ConfirmPopup from 'primevue/confirmpopup'
 import Divider from 'primevue/divider'
-
-import { t } from '@/i18n'
-import { useMaintenanceTaskStore } from '@/stores/maintenanceTaskStore'
-import type {
-  MaintenanceFilter,
-  MaintenanceTask
-} from '@/types/desktop/maintenanceTypes'
 
 import TaskCard from './TaskCard.vue'
 import TaskListItem from './TaskListItem.vue'

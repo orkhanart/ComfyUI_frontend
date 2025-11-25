@@ -108,6 +108,15 @@
 </template>
 
 <script setup lang="ts">
+import RefreshButton from '@desktop/components/common/RefreshButton.vue'
+import StatusTag from '@desktop/components/maintenance/StatusTag.vue'
+import TaskListPanel from '@desktop/components/maintenance/TaskListPanel.vue'
+import TerminalOutputDrawer from '@desktop/components/maintenance/TerminalOutputDrawer.vue'
+import { t } from '@desktop/i18n'
+import { useMaintenanceTaskStore } from '@desktop/stores/maintenanceTaskStore'
+import type { MaintenanceFilter } from '@desktop/types/desktop/maintenanceTypes'
+import { electronAPI } from '@desktop/utils/envUtil'
+import { useMinLoadingDurationRef } from '@desktop/utils/refUtil'
 import { PrimeIcons } from '@primevue/core/api'
 import Button from 'primevue/button'
 import SelectButton from 'primevue/selectbutton'
@@ -115,16 +124,6 @@ import Tag from 'primevue/tag'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-
-import RefreshButton from '@/components/common/RefreshButton.vue'
-import StatusTag from '@/components/maintenance/StatusTag.vue'
-import TaskListPanel from '@/components/maintenance/TaskListPanel.vue'
-import TerminalOutputDrawer from '@/components/maintenance/TerminalOutputDrawer.vue'
-import { t } from '@/i18n'
-import { useMaintenanceTaskStore } from '@/stores/maintenanceTaskStore'
-import type { MaintenanceFilter } from '@/types/desktop/maintenanceTypes'
-import { electronAPI } from '@/utils/envUtil'
-import { useMinLoadingDurationRef } from '@/utils/refUtil'
 
 import BaseViewTemplate from './templates/BaseViewTemplate.vue'
 

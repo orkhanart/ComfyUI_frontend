@@ -23,9 +23,8 @@
 </template>
 
 <script setup lang="ts">
+import LanguageSelector from '@desktop/components/common/LanguageSelector.vue'
 import { computed, nextTick, onMounted, ref } from 'vue'
-
-import LanguageSelector from '@/components/common/LanguageSelector.vue'
 
 import { electronAPI, isElectron, isNativeWindow } from '../../utils/envUtil'
 

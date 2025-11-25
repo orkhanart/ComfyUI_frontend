@@ -49,13 +49,12 @@
 </template>
 
 <script setup lang="ts">
+import { useMaintenanceTaskStore } from '@desktop/stores/maintenanceTaskStore'
+import type { MaintenanceTask } from '@desktop/types/desktop/maintenanceTypes'
+import { useMinLoadingDurationRef } from '@desktop/utils/refUtil'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import { computed } from 'vue'
-
-import { useMaintenanceTaskStore } from '@/stores/maintenanceTaskStore'
-import type { MaintenanceTask } from '@/types/desktop/maintenanceTypes'
-import { useMinLoadingDurationRef } from '@/utils/refUtil'
 
 const taskStore = useMaintenanceTaskStore()
 const runner = computed(() => taskStore.getRunner(props.task))

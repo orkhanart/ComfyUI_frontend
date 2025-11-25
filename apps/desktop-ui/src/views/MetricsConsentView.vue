@@ -48,14 +48,13 @@
 </template>
 
 <script setup lang="ts">
+import { electronAPI } from '@desktop/utils/envUtil'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-
-import { electronAPI } from '@/utils/envUtil'
 
 const toast = useToast()
 const { t } = useI18n()

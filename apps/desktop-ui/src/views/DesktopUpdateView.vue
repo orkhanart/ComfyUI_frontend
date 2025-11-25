@@ -38,14 +38,13 @@
 </template>
 
 <script setup lang="ts">
+import TerminalOutputDrawer from '@desktop/components/maintenance/TerminalOutputDrawer.vue'
+import { t } from '@desktop/i18n'
+import { electronAPI } from '@desktop/utils/envUtil'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
 import Toast from 'primevue/toast'
 import { onUnmounted, ref } from 'vue'
-
-import TerminalOutputDrawer from '@/components/maintenance/TerminalOutputDrawer.vue'
-import { t } from '@/i18n'
-import { electronAPI } from '@/utils/envUtil'
 
 import BaseViewTemplate from './templates/BaseViewTemplate.vue'
 

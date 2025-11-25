@@ -30,7 +30,7 @@ export default defineConfig(() => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(projectRoot, 'src'),
+        '@desktop': path.resolve(projectRoot, 'src'),
         '@frontend-locales': path.resolve(projectRoot, '../../src/locales')
       }
     },

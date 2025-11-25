@@ -25,12 +25,11 @@
 <script setup lang="ts">
 import { isValidUrl } from '@comfyorg/shared-frontend-utils/formatUtil'
 import { checkUrlReachable } from '@comfyorg/shared-frontend-utils/networkUtil'
+import { ValidationState } from '@desktop/utils/validationUtil'
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
 import { onMounted, ref, watch } from 'vue'
-
-import { ValidationState } from '@/utils/validationUtil'
 
 const props = defineProps<{
   modelValue: string

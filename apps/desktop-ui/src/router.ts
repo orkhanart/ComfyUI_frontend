@@ -4,8 +4,8 @@ import {
   createWebHistory
 } from 'vue-router'
 
-import { isElectron } from '@/utils/envUtil'
-import LayoutDefault from '@/views/layouts/LayoutDefault.vue'
+import { isElectron } from '@desktop/utils/envUtil'
+import LayoutDefault from '@desktop/views/layouts/LayoutDefault.vue'
 
 const isFileProtocol = window.location.protocol === 'file:'
 const basePath = isElectron() ? '/' : window.location.pathname
@@ -20,62 +20,62 @@ const router = createRouter({
         {
           path: '',
           name: 'WelcomeView',
-          component: () => import('@/views/WelcomeView.vue')
+          component: () => import('@desktop/views/WelcomeView.vue')
         },
         {
           path: 'welcome',
           name: 'WelcomeViewAlias',
-          component: () => import('@/views/WelcomeView.vue')
+          component: () => import('@desktop/views/WelcomeView.vue')
         },
         {
           path: 'install',
           name: 'InstallView',
-          component: () => import('@/views/InstallView.vue')
+          component: () => import('@desktop/views/InstallView.vue')
         },
         {
           path: 'download-git',
           name: 'DownloadGitView',
-          component: () => import('@/views/DownloadGitView.vue')
+          component: () => import('@desktop/views/DownloadGitView.vue')
         },
         {
           path: 'desktop-start',
           name: 'DesktopStartView',
-          component: () => import('@/views/DesktopStartView.vue')
+          component: () => import('@desktop/views/DesktopStartView.vue')
         },
         {
           path: 'desktop-update',
           name: 'DesktopUpdateView',
-          component: () => import('@/views/DesktopUpdateView.vue')
+          component: () => import('@desktop/views/DesktopUpdateView.vue')
         },
         {
           path: 'server-start',
           name: 'ServerStartView',
-          component: () => import('@/views/ServerStartView.vue')
+          component: () => import('@desktop/views/ServerStartView.vue')
         },
         {
           path: 'manual-configuration',
           name: 'ManualConfigurationView',
-          component: () => import('@/views/ManualConfigurationView.vue')
+          component: () => import('@desktop/views/ManualConfigurationView.vue')
         },
         {
           path: 'metrics-consent',
           name: 'MetricsConsentView',
-          component: () => import('@/views/MetricsConsentView.vue')
+          component: () => import('@desktop/views/MetricsConsentView.vue')
         },
         {
           path: 'maintenance',
           name: 'MaintenanceView',
-          component: () => import('@/views/MaintenanceView.vue')
+          component: () => import('@desktop/views/MaintenanceView.vue')
         },
         {
           path: 'not-supported',
           name: 'NotSupportedView',
-          component: () => import('@/views/NotSupportedView.vue')
+          component: () => import('@desktop/views/NotSupportedView.vue')
         },
         {
           path: 'desktop-dialog/:dialogId',
           name: 'DesktopDialogView',
-          component: () => import('@/views/DesktopDialogView.vue')
+          component: () => import('@desktop/views/DesktopDialogView.vue')
         }
       ]
     }

@@ -67,12 +67,11 @@
 
 <script setup lang="ts">
 import type { TorchDeviceType } from '@comfyorg/comfyui-electron-types'
+import HardwareOption from '@desktop/components/install/HardwareOption.vue'
+import { st } from '@desktop/i18n'
+import { electronAPI } from '@desktop/utils/envUtil'
 import Tag from 'primevue/tag'
 import { computed } from 'vue'
-
-import HardwareOption from '@/components/install/HardwareOption.vue'
-import { st } from '@/i18n'
-import { electronAPI } from '@/utils/envUtil'
 
 const selected = defineModel<TorchDeviceType | null>('device', {
   required: true

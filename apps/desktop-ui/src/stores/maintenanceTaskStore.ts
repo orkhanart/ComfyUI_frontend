@@ -2,9 +2,9 @@ import type { InstallValidation } from '@comfyorg/comfyui-electron-types'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-import { DESKTOP_MAINTENANCE_TASKS } from '@/constants/desktopMaintenanceTasks'
-import type { MaintenanceTask } from '@/types/desktop/maintenanceTypes'
-import { electronAPI } from '@/utils/envUtil'
+import { DESKTOP_MAINTENANCE_TASKS } from '@desktop/constants/desktopMaintenanceTasks'
+import type { MaintenanceTask } from '@desktop/types/desktop/maintenanceTypes'
+import { electronAPI } from '@desktop/utils/envUtil'
 
 /** State of a maintenance task, managed by the maintenance task store. */
 type MaintenanceTaskState = 'warning' | 'error' | 'OK' | 'skipped'

@@ -29,10 +29,9 @@
 </template>
 
 <script setup lang="ts">
+import type { PrimeVueSeverity } from '@desktop/types/primeVueTypes'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
-
-import type { PrimeVueSeverity } from '@/types/primeVueTypes'
 
 const {
   disabled,

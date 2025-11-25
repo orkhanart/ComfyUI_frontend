@@ -26,16 +26,15 @@
 </template>
 
 <script setup lang="ts">
+import { useTerminal } from '@desktop/composables/bottomPanelTabs/useTerminal'
+import { electronAPI, isElectron } from '@desktop/utils/envUtil'
+import { cn } from '@desktop/utils/tailwindUtil'
 import { useElementHover, useEventListener } from '@vueuse/core'
 import type { IDisposable } from '@xterm/xterm'
 import Button from 'primevue/button'
 import type { Ref } from 'vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-import { useTerminal } from '@/composables/bottomPanelTabs/useTerminal'
-import { electronAPI, isElectron } from '@/utils/envUtil'
-import { cn } from '@/utils/tailwindUtil'
 
 const { t } = useI18n()
 

@@ -57,18 +57,17 @@ import type {
   InstallOptions,
   TorchDeviceType
 } from '@comfyorg/comfyui-electron-types'
+import DesktopSettingsConfiguration from '@desktop/components/install/DesktopSettingsConfiguration.vue'
+import GpuPicker from '@desktop/components/install/GpuPicker.vue'
+import InstallFooter from '@desktop/components/install/InstallFooter.vue'
+import InstallLocationPicker from '@desktop/components/install/InstallLocationPicker.vue'
+import { electronAPI } from '@desktop/utils/envUtil'
+import BaseViewTemplate from '@desktop/views/templates/BaseViewTemplate.vue'
 import StepPanel from 'primevue/steppanel'
 import StepPanels from 'primevue/steppanels'
 import Stepper from 'primevue/stepper'
 import { computed, onMounted, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
-
-import DesktopSettingsConfiguration from '@/components/install/DesktopSettingsConfiguration.vue'
-import GpuPicker from '@/components/install/GpuPicker.vue'
-import InstallFooter from '@/components/install/InstallFooter.vue'
-import InstallLocationPicker from '@/components/install/InstallLocationPicker.vue'
-import { electronAPI } from '@/utils/envUtil'
-import BaseViewTemplate from '@/views/templates/BaseViewTemplate.vue'
 
 const device = ref<TorchDeviceType | null>(null)
 

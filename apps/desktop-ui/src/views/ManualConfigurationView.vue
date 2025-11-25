@@ -51,14 +51,13 @@
 </template>
 
 <script setup lang="ts">
+import { electronAPI } from '@desktop/utils/envUtil'
+import BaseViewTemplate from '@desktop/views/templates/BaseViewTemplate.vue'
 import Button from 'primevue/button'
 import Panel from 'primevue/panel'
 import Tag from 'primevue/tag'
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-import { electronAPI } from '@/utils/envUtil'
-import BaseViewTemplate from '@/views/templates/BaseViewTemplate.vue'
 
 const { t } = useI18n()
 

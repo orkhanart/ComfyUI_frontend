@@ -54,15 +54,14 @@
 
 <script setup lang="ts">
 import { normalizeI18nKey } from '@comfyorg/shared-frontend-utils/formatUtil'
+import UrlInput from '@desktop/components/common/UrlInput.vue'
+import type { UVMirror } from '@desktop/constants/uvMirrors'
+import { st } from '@desktop/i18n'
+import { checkMirrorReachable } from '@desktop/utils/electronMirrorCheck'
+import { ValidationState } from '@desktop/utils/validationUtil'
 import Dialog from 'primevue/dialog'
 import Divider from 'primevue/divider'
 import { computed, onMounted, ref, watch } from 'vue'
-
-import UrlInput from '@/components/common/UrlInput.vue'
-import type { UVMirror } from '@/constants/uvMirrors'
-import { st } from '@/i18n'
-import { checkMirrorReachable } from '@/utils/electronMirrorCheck'
-import { ValidationState } from '@/utils/validationUtil'
 
 const FILE_URL_SCHEME = 'file://'
 const EXAMPLE_FILE_URL = '/C:/MyPythonInstallers/'

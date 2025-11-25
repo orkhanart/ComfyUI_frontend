@@ -37,8 +37,7 @@
 
 <script setup lang="ts">
 import type { TorchDeviceType } from '@comfyorg/comfyui-electron-types'
-
-import { cn } from '@/utils/tailwindUtil'
+import { cn } from '@desktop/utils/tailwindUtil'
 
 interface Props {
   imagePath?: string

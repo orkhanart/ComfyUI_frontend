@@ -90,17 +90,16 @@ import type {
   InstallStageInfo,
   InstallStageName
 } from '@comfyorg/comfyui-electron-types'
+import BaseTerminal from '@desktop/components/bottomPanel/tabs/terminal/BaseTerminal.vue'
+import StartupDisplay from '@desktop/components/common/StartupDisplay.vue'
+import type { useTerminal } from '@desktop/composables/bottomPanelTabs/useTerminal'
+import { electronAPI } from '@desktop/utils/envUtil'
+import BaseViewTemplate from '@desktop/views/templates/BaseViewTemplate.vue'
 import type { Terminal } from '@xterm/xterm'
 import Button from 'primevue/button'
 import type { Ref } from 'vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-import BaseTerminal from '@/components/bottomPanel/tabs/terminal/BaseTerminal.vue'
-import StartupDisplay from '@/components/common/StartupDisplay.vue'
-import type { useTerminal } from '@/composables/bottomPanelTabs/useTerminal'
-import { electronAPI } from '@/utils/envUtil'
-import BaseViewTemplate from '@/views/templates/BaseViewTemplate.vue'
 
 const { t } = useI18n()
 const electron = electronAPI()

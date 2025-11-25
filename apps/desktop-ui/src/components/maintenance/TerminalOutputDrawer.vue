@@ -10,15 +10,14 @@
 </template>
 
 <script setup lang="ts">
+import BaseTerminal from '@desktop/components/bottomPanel/tabs/terminal/BaseTerminal.vue'
+import type { useTerminal } from '@desktop/composables/bottomPanelTabs/useTerminal'
+import { useTerminalBuffer } from '@desktop/composables/bottomPanelTabs/useTerminalBuffer'
+import { electronAPI } from '@desktop/utils/envUtil'
 import type { Terminal } from '@xterm/xterm'
 import Drawer from 'primevue/drawer'
 import type { Ref } from 'vue'
 import { onMounted } from 'vue'
-
-import BaseTerminal from '@/components/bottomPanel/tabs/terminal/BaseTerminal.vue'
-import type { useTerminal } from '@/composables/bottomPanelTabs/useTerminal'
-import { useTerminalBuffer } from '@/composables/bottomPanelTabs/useTerminalBuffer'
-import { electronAPI } from '@/utils/envUtil'
 
 // Model
 const terminalVisible = defineModel<boolean>({ required: true })
