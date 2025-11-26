@@ -408,12 +408,12 @@ export const ToastPositions: Story = {
 
         <!-- Mock toast at top-right (ComfyUI default) -->
         <div class="absolute top-8 right-8 w-72">
-          <div class="bg-green-50 border border-green-200 rounded-lg p-4 shadow-lg">
+          <div class="bg-green-100 border-l-4 border-green-500 rounded-lg p-4 shadow-lg">
             <div class="flex items-start gap-3">
-              <i class="pi pi-check-circle text-green-500 text-xl"></i>
+              <i class="pi pi-check-circle text-green-600 text-xl"></i>
               <div>
-                <div class="font-semibold text-green-800">Success</div>
-                <div class="text-sm text-green-700">ComfyUI uses top-right position</div>
+                <div class="font-semibold text-green-900">Success</div>
+                <div class="text-sm text-green-800">ComfyUI uses top-right position</div>
               </div>
             </div>
           </div>
@@ -555,62 +555,65 @@ export const DarkTheme: Story = {
 
 /**
  * Static toast examples (visual reference)
+ *
+ * These mock toasts show the visual structure without PrimeVue Toast component.
+ * Use these as a reference for toast appearance across themes.
  */
 export const StaticExamples: Story = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4 w-[350px]">
         <!-- Success -->
-        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+        <div class="bg-green-100 border-l-4 border-green-500 rounded-lg p-4 shadow-md">
           <div class="flex items-start gap-3">
-            <i class="pi pi-check-circle text-green-500 text-xl mt-0.5"></i>
+            <i class="pi pi-check-circle text-green-600 text-xl mt-0.5"></i>
             <div class="flex-1">
-              <div class="font-semibold text-green-800">Success</div>
-              <div class="text-sm text-green-700">Workflow saved successfully.</div>
+              <div class="font-semibold text-green-900">Success</div>
+              <div class="text-sm text-green-800">Workflow saved successfully.</div>
             </div>
-            <button class="text-green-500 hover:text-green-700">
+            <button class="text-green-600 hover:text-green-800">
               <i class="pi pi-times"></i>
             </button>
           </div>
         </div>
 
         <!-- Info -->
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div class="bg-blue-100 border-l-4 border-blue-500 rounded-lg p-4 shadow-md">
           <div class="flex items-start gap-3">
-            <i class="pi pi-info-circle text-blue-500 text-xl mt-0.5"></i>
+            <i class="pi pi-info-circle text-blue-600 text-xl mt-0.5"></i>
             <div class="flex-1">
-              <div class="font-semibold text-blue-800">Information</div>
-              <div class="text-sm text-blue-700">Added to queue position #3</div>
+              <div class="font-semibold text-blue-900">Information</div>
+              <div class="text-sm text-blue-800">Added to queue position #3</div>
             </div>
-            <button class="text-blue-500 hover:text-blue-700">
+            <button class="text-blue-600 hover:text-blue-800">
               <i class="pi pi-times"></i>
             </button>
           </div>
         </div>
 
         <!-- Warning -->
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+        <div class="bg-amber-100 border-l-4 border-amber-500 rounded-lg p-4 shadow-md">
           <div class="flex items-start gap-3">
-            <i class="pi pi-exclamation-triangle text-yellow-600 text-xl mt-0.5"></i>
+            <i class="pi pi-exclamation-triangle text-amber-600 text-xl mt-0.5"></i>
             <div class="flex-1">
-              <div class="font-semibold text-yellow-800">Warning</div>
-              <div class="text-sm text-yellow-700">Missing custom node detected.</div>
+              <div class="font-semibold text-amber-900">Warning</div>
+              <div class="text-sm text-amber-800">Missing custom node detected.</div>
             </div>
-            <button class="text-yellow-600 hover:text-yellow-800">
+            <button class="text-amber-600 hover:text-amber-800">
               <i class="pi pi-times"></i>
             </button>
           </div>
         </div>
 
         <!-- Error -->
-        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div class="bg-red-100 border-l-4 border-red-500 rounded-lg p-4 shadow-md">
           <div class="flex items-start gap-3">
-            <i class="pi pi-times-circle text-red-500 text-xl mt-0.5"></i>
+            <i class="pi pi-times-circle text-red-600 text-xl mt-0.5"></i>
             <div class="flex-1">
-              <div class="font-semibold text-red-800">Error</div>
-              <div class="text-sm text-red-700">CUDA out of memory error.</div>
+              <div class="font-semibold text-red-900">Error</div>
+              <div class="text-sm text-red-800">CUDA out of memory error.</div>
             </div>
-            <button class="text-red-500 hover:text-red-700">
+            <button class="text-red-600 hover:text-red-800">
               <i class="pi pi-times"></i>
             </button>
           </div>

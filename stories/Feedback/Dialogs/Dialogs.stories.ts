@@ -46,7 +46,7 @@ export const ConfirmationDefault: Story = {
   render: () => ({
     components: { Dialog, Button, Message },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       return { visible }
     },
     template: `
@@ -71,7 +71,7 @@ export const ConfirmationDelete: Story = {
   render: () => ({
     components: { Dialog, Button },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       return { visible }
     },
     template: `
@@ -96,7 +96,7 @@ export const ConfirmationOverwrite: Story = {
   render: () => ({
     components: { Dialog, Button },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       return { visible }
     },
     template: `
@@ -121,7 +121,7 @@ export const ConfirmationDirtyClose: Story = {
   render: () => ({
     components: { Dialog, Button },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       return { visible }
     },
     template: `
@@ -147,7 +147,7 @@ export const ConfirmationWithList: Story = {
   render: () => ({
     components: { Dialog, Button },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       const items = [
         'workflow_portrait.json',
         'workflow_landscape.json',
@@ -180,7 +180,7 @@ export const ConfirmationWithHint: Story = {
   render: () => ({
     components: { Dialog, Button, Message },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       return { visible }
     },
     template: `
@@ -208,7 +208,7 @@ export const ConfirmationWithCheckbox: Story = {
   render: () => ({
     components: { Dialog, Button, Checkbox },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       const doNotAskAgain = ref(false)
       return { visible, doNotAskAgain }
     },
@@ -238,7 +238,7 @@ export const ErrorDialog: Story = {
   render: () => ({
     components: { Dialog, Button, Divider, ScrollPanel },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       const reportOpen = ref(false)
       const errorReport = `System Information:
 - ComfyUI Version: 1.0.0
@@ -299,7 +299,7 @@ export const MissingNodesDialog: Story = {
   render: () => ({
     components: { Dialog, Button },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       const missingNodes = [
         { name: 'ControlNetApply', package: 'comfyui-controlnet' },
         { name: 'IPAdapterApply', package: 'comfyui-ipadapter' },
@@ -342,7 +342,7 @@ export const SettingsDialog: Story = {
   render: () => ({
     components: { Dialog, Button },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       const activeTab = ref('general')
       const tabs = [
         { id: 'general', label: 'General', icon: 'pi pi-cog' },
@@ -541,7 +541,7 @@ export const DarkTheme: Story = {
   render: () => ({
     components: { Dialog, Button, Message },
     setup() {
-      const visible = ref(true)
+      const visible = ref(false)
       return { visible }
     },
     template: `
