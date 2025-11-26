@@ -17,6 +17,7 @@ import IconButton from '@/components/button/IconButton.vue'
 const meta: Meta<typeof IconButton> = {
   title: 'Buttons/IconButton',
   component: IconButton,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

@@ -20,6 +20,7 @@ import IconGroup from '@/components/button/IconGroup.vue'
 const meta: Meta<typeof IconGroup> = {
   title: 'Buttons/IconGroup',
   component: IconGroup,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

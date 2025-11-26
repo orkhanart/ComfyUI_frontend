@@ -19,6 +19,7 @@ import TextButton from '@/components/button/TextButton.vue'
 const meta: Meta<typeof TextButton> = {
   title: 'Buttons/TextButton',
   component: TextButton,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

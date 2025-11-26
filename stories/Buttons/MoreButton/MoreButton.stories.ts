@@ -26,6 +26,7 @@ import MoreButton from '@/components/button/MoreButton.vue'
 const meta: Meta<typeof MoreButton> = {
   title: 'Buttons/MoreButton',
   component: MoreButton,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

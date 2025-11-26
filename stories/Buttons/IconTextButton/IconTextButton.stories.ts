@@ -22,6 +22,7 @@ import IconTextButton from '@/components/button/IconTextButton.vue'
 const meta: Meta<typeof IconTextButton> = {
   title: 'Buttons/IconTextButton',
   component: IconTextButton,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {
