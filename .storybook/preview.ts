@@ -76,6 +76,60 @@ const preview: Preview = {
         { name: 'light', value: '#ffffff' },
         { name: 'dark', value: '#0a0a0a' }
       ]
+    },
+    options: {
+      storySort: {
+        order: [
+          'Introduction',
+          'Foundation',
+          ['Overview', 'Colors', 'Icons', 'Shadows', 'Spacing', 'Typography'],
+          'Buttons',
+          [
+            'Overview',
+            'IconButton',
+            'IconGroup',
+            'IconTextButton',
+            'MoreButton',
+            'TextButton'
+          ],
+          'Forms',
+          [
+            'Overview',
+            'Form Components',
+            'MultiSelect',
+            'SearchBox',
+            'SingleSelect'
+          ],
+          'Data Display',
+          ['Overview', 'Cards', 'Images', 'TreeExplorer', 'VirtualGrid'],
+          'Navigation',
+          ['Overview', 'Breadcrumb', 'Sidebar', 'Tabs', 'Topbar'],
+          'Feedback',
+          ['Overview', 'Dialogs', 'Empty States', 'Loading', 'Toast'],
+          'Overlays',
+          'Specialized',
+          [
+            'Overview',
+            '3D Viewer',
+            'Bottom Panel',
+            'Graph & Canvas',
+            'Mask Editor',
+            'Node Library',
+            'Queue Management',
+            'Widgets'
+          ],
+          'Utilities',
+          [
+            'Overview',
+            'Customization',
+            'Dividers',
+            'File Operations',
+            'System Info',
+            'User Components'
+          ],
+          '*'
+        ]
+      }
     }
   },
   globalTypes: {

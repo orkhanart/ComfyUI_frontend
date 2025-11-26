@@ -7,6 +7,7 @@ import type { InlineConfig } from 'vite'
 
 const config: StorybookConfig = {
   stories: [
+    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../apps/desktop-ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'
   ],
