@@ -52,14 +52,14 @@ const meta = {
         </table>
 
         <h2 style="font-size: 1.875rem; font-weight: 600; margin-bottom: 1rem; margin-top: 2.5rem; color: #1a1a1a;">
-          Variants
+          Types
         </h2>
 
         <ul style="color: #4a4a4a; padding-left: 1.5rem;">
-          <li style="margin-bottom: 0.5rem;"><strong>Primary:</strong> Main actions</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Secondary:</strong> Secondary actions</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Text:</strong> Minimal style</li>
-          <li><strong>Danger:</strong> Destructive actions</li>
+          <li style="margin-bottom: 0.5rem;"><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">primary</code> - High emphasis, main actions (dark bg, light text)</li>
+          <li style="margin-bottom: 0.5rem;"><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">secondary</code> - Medium emphasis, alternative actions</li>
+          <li style="margin-bottom: 0.5rem;"><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">transparent</code> - Low emphasis, tertiary actions</li>
+          <li><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">accent</code> - Brand-colored, special emphasis</li>
         </ul>
 
         <h2 style="font-size: 1.875rem; font-weight: 600; margin-bottom: 1rem; margin-top: 2.5rem; color: #1a1a1a;">
@@ -67,10 +67,19 @@ const meta = {
         </h2>
 
         <ul style="color: #4a4a4a; padding-left: 1.5rem;">
-          <li style="margin-bottom: 0.5rem;"><strong>Small:</strong> Compact areas</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Medium:</strong> Default</li>
-          <li><strong>Large:</strong> Emphasized actions</li>
+          <li style="margin-bottom: 0.5rem;"><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">sm</code> - Small (32x32 icons, compact text)</li>
+          <li style="margin-bottom: 0.5rem;"><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">md</code> - Medium/default (40x40 icons)</li>
+          <li><code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">fit-content</code> - Auto-sized to content</li>
         </ul>
+
+        <h2 style="font-size: 1.875rem; font-weight: 600; margin-bottom: 1rem; margin-top: 2.5rem; color: #1a1a1a;">
+          Border Variant
+        </h2>
+
+        <p style="color: #4a4a4a;">
+          All buttons support a <code style="background: #f5f5f5; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">border</code> prop
+          that adds a visible border, useful for buttons on complex backgrounds.
+        </p>
       </div>
     `
   })
