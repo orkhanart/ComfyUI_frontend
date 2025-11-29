@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import LinearIconSidebar from '@/components/linear/LinearIconSidebar.vue'
+import LinearIconSidebar, { type LinearTab } from '@/components/linear/LinearIconSidebar.vue'
 import LinearCreationPanel from '@/components/linear/LinearCreationPanel.vue'
+import LinearChatPanel from '@/components/linear/LinearChatPanel.vue'
 import LinearHistoryPanel from '@/components/linear/LinearHistoryPanel.vue'
 
 const sessionName = ref('Untitled session')
 const credits = ref(4625)
+const activeTab = ref<LinearTab>('tool')
 </script>
 
 <template>
   <div class="linear-view flex h-screen bg-zinc-950">
-    <!-- Left Icon Sidebar (Chat, Tool, Apps, Workflow) -->
-    <LinearIconSidebar />
+    <!-- Left Icon Sidebar (Projects, Chat, Tool, Apps, Workflow) -->
+    <LinearIconSidebar v-model:active-tab="activeTab" />
 
-    <!-- Left Creation Panel (prompt, upload, settings, generate) -->
-    <LinearCreationPanel />
+    <!-- Left Panel - switches based on active tab -->
+    <LinearChatPanel v-if="activeTab === 'chat'" />
+    <LinearCreationPanel v-else />
 
     <!-- Right Main Area (queue/history) -->
     <div class="flex flex-1 flex-col">

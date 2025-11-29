@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+export type LinearTab = 'projects' | 'chat' | 'tool' | 'apps' | 'workflow'
 
-type LinearTab = 'chat' | 'tool' | 'apps' | 'workflow'
+const props = defineProps<{
+  activeTab?: LinearTab
+}>()
 
-const activeTab = ref<LinearTab>('tool')
+const emit = defineEmits<{
+  'update:activeTab': [tab: LinearTab]
+}>()
 
 const tabs: Array<{ id: LinearTab; icon: string; label: string }> = [
+  { id: 'projects', icon: 'pi-folder', label: 'Projects' },
   { id: 'chat', icon: 'pi-sparkles', label: 'Chat' },
   { id: 'tool', icon: 'pi-sliders-h', label: 'Tool' },
   { id: 'apps', icon: 'pi-th-large', label: 'Apps' },
   { id: 'workflow', icon: 'pi-sitemap', label: 'Workflow' },
 ]
 
-const emit = defineEmits<{
-  'update:activeTab': [tab: LinearTab]
-}>()
-
 function selectTab(tab: LinearTab): void {
-  activeTab.value = tab
   emit('update:activeTab', tab)
 }
 </script>
@@ -32,7 +32,7 @@ function selectTab(tab: LinearTab): void {
         v-tooltip.right="tab.label"
         :class="[
           'flex h-10 w-10 flex-col items-center justify-center rounded-lg transition-colors',
-          activeTab === tab.id
+          props.activeTab === tab.id
             ? 'bg-zinc-800 text-zinc-100'
             : 'text-zinc-500 hover:bg-zinc-800/50 hover:text-zinc-300'
         ]"
