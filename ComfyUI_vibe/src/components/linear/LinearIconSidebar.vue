@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type LinearTab = 'projects' | 'chat' | 'tool' | 'apps' | 'workflow'
+export type LinearTab = 'chat' | 'tool' | 'apps' | 'workflow'
 
 const props = defineProps<{
   activeTab?: LinearTab
@@ -10,7 +10,6 @@ const emit = defineEmits<{
 }>()
 
 const tabs: Array<{ id: LinearTab; icon: string; label: string }> = [
-  { id: 'projects', icon: 'pi-folder', label: 'Projects' },
   { id: 'chat', icon: 'pi-sparkles', label: 'Chat' },
   { id: 'tool', icon: 'pi-sliders-h', label: 'Tool' },
   { id: 'apps', icon: 'pi-th-large', label: 'Apps' },

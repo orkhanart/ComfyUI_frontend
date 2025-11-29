@@ -94,7 +94,7 @@ function handleKeydown(e: KeyboardEvent): void {
 </script>
 
 <template>
-  <div class="flex h-full w-80 flex-col border-r border-zinc-800 bg-zinc-950">
+  <div class="flex h-full w-96 flex-col border-r border-zinc-800 bg-zinc-950">
     <!-- Header -->
     <div class="flex items-center justify-between border-b border-zinc-800 px-4 py-3">
       <div class="flex items-center gap-2">
