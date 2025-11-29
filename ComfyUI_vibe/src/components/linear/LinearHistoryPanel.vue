@@ -1,217 +1,407 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useLinearModeStore } from '@/stores/linearModeStore'
-import type { LinearOutput } from '@/types/linear'
+import { ref } from 'vue'
 
-const store = useLinearModeStore()
+interface GenerationItem {
+  id: string
+  prompt: string
+  workflow: string
+  mode: string
+  status: 'completed' | 'generating' | 'queued'
+  progress?: number
+  createdAt: Date
+  images: string[]
+  batchSize: number
+  parameters: {
+    steps: number
+    cfg: number
+    width: number
+    height: number
+    seed: number
+    sampler?: string
+    model?: string
+  }
+}
 
-const activeTab = ref<'queue' | 'history'>('queue')
-
-const outputs = computed(() => store.outputs)
-const isGenerating = computed(() => store.isGenerating)
-const currentWorkflow = computed(() => store.currentWorkflow)
-
-// Mock queue items
-const queueItems = computed(() => {
-  if (!isGenerating.value || !currentWorkflow.value) return []
-
-  return [
-    {
-      id: currentWorkflow.value.id,
-      name: currentWorkflow.value.templateName,
-      status: 'running' as const,
-      progress: store.executionProgress,
-      currentStep: currentWorkflow.value.currentStepIndex + 1,
-      totalSteps: currentWorkflow.value.steps.length,
+// Mock generation data with batch images
+const generations = ref<GenerationItem[]>([
+  {
+    id: 'gen-1',
+    prompt: 'A serene mountain landscape at sunset with golden light',
+    workflow: 'Text to Image',
+    mode: 'Creative',
+    status: 'generating',
+    progress: 65,
+    createdAt: new Date(),
+    images: [],
+    batchSize: 4,
+    parameters: {
+      steps: 30,
+      cfg: 7.5,
+      width: 1024,
+      height: 1024,
+      seed: 42891723,
+      sampler: 'DPM++ 2M',
+      model: 'SDXL 1.0',
     },
-  ]
-})
+  },
+  {
+    id: 'gen-2',
+    prompt: 'Futuristic cyberpunk city street at night with neon lights and flying cars',
+    workflow: 'Text to Image',
+    mode: 'Precise',
+    status: 'completed',
+    createdAt: new Date(Date.now() - 300000),
+    images: [
+      '/assets/card_images/workflow_01.webp',
+      '/assets/card_images/workflow_02.webp',
+      '/assets/card_images/workflow_03.webp',
+      '/assets/card_images/workflow_04.webp',
+    ],
+    batchSize: 4,
+    parameters: {
+      steps: 25,
+      cfg: 8,
+      width: 1024,
+      height: 768,
+      seed: 18273645,
+      sampler: 'Euler a',
+      model: 'SDXL 1.0',
+    },
+  },
+  {
+    id: 'gen-3',
+    prompt: 'Portrait of a woman in Renaissance painting style, dramatic lighting',
+    workflow: 'Image to Image',
+    mode: 'Iterate',
+    status: 'completed',
+    createdAt: new Date(Date.now() - 600000),
+    images: [
+      '/assets/card_images/workflow_02.webp',
+      '/assets/card_images/workflow_01.webp',
+    ],
+    batchSize: 2,
+    parameters: {
+      steps: 40,
+      cfg: 6.5,
+      width: 768,
+      height: 1024,
+      seed: 98712345,
+      sampler: 'DPM++ SDE',
+      model: 'SDXL 1.0',
+    },
+  },
+  {
+    id: 'gen-4',
+    prompt: 'Abstract art with vibrant colors and flowing shapes',
+    workflow: 'Text to Image',
+    mode: 'Creative',
+    status: 'queued',
+    createdAt: new Date(Date.now() - 60000),
+    images: [],
+    batchSize: 4,
+    parameters: {
+      steps: 20,
+      cfg: 9,
+      width: 1024,
+      height: 1024,
+      seed: -1,
+      sampler: 'DPM++ 2M',
+      model: 'SDXL 1.0',
+    },
+  },
+])
 
 function formatTime(date: Date): string {
+  const now = new Date()
+  const diff = now.getTime() - date.getTime()
+  const minutes = Math.floor(diff / 60000)
+
+  if (minutes < 1) return 'Just now'
+  if (minutes < 60) return `${minutes}m ago`
+
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+
   return new Intl.DateTimeFormat('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
+    month: 'short',
+    day: 'numeric',
   }).format(date)
 }
 
-function handleDownload(output: LinearOutput): void {
-  const link = document.createElement('a')
-  link.href = output.url
-  link.download = output.filename
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+function getStatusColor(status: GenerationItem['status']): string {
+  switch (status) {
+    case 'generating':
+      return 'bg-blue-500'
+    case 'queued':
+      return 'bg-amber-500'
+    case 'completed':
+      return 'bg-emerald-500'
+  }
 }
 
-function handleDelete(outputId: string): void {
-  store.deleteOutput(outputId)
+function getStatusText(status: GenerationItem['status']): string {
+  switch (status) {
+    case 'generating':
+      return 'Generating'
+    case 'queued':
+      return 'Queued'
+    case 'completed':
+      return 'Completed'
+  }
 }
 
-function handleClearHistory(): void {
-  store.clearOutputs()
+function handleDelete(id: string): void {
+  generations.value = generations.value.filter(g => g.id !== id)
+}
+
+function handleDownload(gen: GenerationItem, imageIndex?: number): void {
+  if (gen.images.length === 0) return
+
+  if (imageIndex !== undefined) {
+    const link = document.createElement('a')
+    link.href = gen.images[imageIndex]!
+    link.download = `generation-${gen.id}-${imageIndex + 1}.png`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } else {
+    // Download all
+    gen.images.forEach((img, idx) => {
+      const link = document.createElement('a')
+      link.href = img
+      link.download = `generation-${gen.id}-${idx + 1}.png`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    })
+  }
+}
+
+function handleRerun(gen: GenerationItem): void {
+  console.log('Rerun:', gen)
+}
+
+function getGridCols(count: number): string {
+  if (count === 1) return 'grid-cols-2'
+  if (count === 2) return 'grid-cols-4'
+  return 'grid-cols-4 sm:grid-cols-8'
 }
 </script>
 
 <template>
-  <!-- Main content area - takes remaining space -->
   <main class="flex h-full flex-1 flex-col bg-zinc-950">
-    <!-- Tabs -->
-    <div class="flex border-b border-zinc-800">
-      <button
-        :class="[
-          'flex-1 px-4 py-2.5 text-xs font-medium transition-colors',
-          activeTab === 'queue'
-            ? 'border-b-2 border-blue-600 text-zinc-100'
-            : 'text-zinc-500 hover:text-zinc-300'
-        ]"
-        @click="activeTab = 'queue'"
-      >
-        Queue
-        <span
-          v-if="queueItems.length"
-          class="ml-1.5 rounded-full bg-blue-600 px-1.5 py-0.5 text-[10px] text-white"
-        >
-          {{ queueItems.length }}
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-zinc-800 px-4 py-2">
+      <div class="flex items-center gap-3">
+        <span class="text-sm font-medium text-zinc-200">Generations</span>
+        <span class="rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] text-zinc-500">
+          {{ generations.length }}
         </span>
-      </button>
-      <button
-        :class="[
-          'flex-1 px-4 py-2.5 text-xs font-medium transition-colors',
-          activeTab === 'history'
-            ? 'border-b-2 border-blue-600 text-zinc-100'
-            : 'text-zinc-500 hover:text-zinc-300'
-        ]"
-        @click="activeTab = 'history'"
-      >
-        History
-        <span
-          v-if="outputs.length"
-          class="ml-1.5 rounded bg-zinc-700 px-1.5 py-0.5 text-[10px] text-zinc-400"
-        >
-          {{ outputs.length }}
-        </span>
-      </button>
-    </div>
-
-    <!-- Queue View -->
-    <div v-if="activeTab === 'queue'" class="flex-1 overflow-y-auto">
-      <!-- Active Queue Items -->
-      <div v-if="queueItems.length" class="p-3">
-        <div
-          v-for="item in queueItems"
-          :key="item.id"
-          class="rounded-lg border border-zinc-800 bg-zinc-800/50 p-3"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
-              <span class="text-xs font-medium text-zinc-200">{{ item.name }}</span>
-            </div>
-            <span class="text-[10px] text-zinc-500">
-              Step {{ item.currentStep }}/{{ item.totalSteps }}
-            </span>
-          </div>
-
-          <!-- Progress -->
-          <div class="mt-2">
-            <div class="h-1 overflow-hidden rounded-full bg-zinc-700">
-              <div
-                class="h-full rounded-full bg-blue-600 transition-all duration-300"
-                :style="{ width: `${item.progress}%` }"
-              />
-            </div>
-            <div class="mt-1 text-right text-[10px] text-zinc-500">
-              {{ Math.round(item.progress) }}%
-            </div>
-          </div>
-        </div>
       </div>
-
-      <!-- Empty Queue -->
-      <div
-        v-else
-        class="flex flex-col items-center justify-center py-12 text-zinc-500"
-      >
-        <i class="pi pi-clock mb-2 text-2xl" />
-        <span class="text-xs">Queue is empty</span>
-        <p class="mt-1 text-center text-[10px] text-zinc-600">
-          Generated images will appear here
-        </p>
-      </div>
-    </div>
-
-    <!-- History View -->
-    <div v-else class="flex flex-1 flex-col overflow-hidden">
-      <!-- History Header -->
-      <div
-        v-if="outputs.length"
-        class="flex items-center justify-between border-b border-zinc-800 px-3 py-2"
-      >
-        <span class="text-[10px] text-zinc-500">{{ outputs.length }} generations</span>
+      <div class="flex items-center gap-2">
         <button
-          class="text-[10px] text-zinc-500 transition-colors hover:text-red-400"
-          @click="handleClearHistory"
+          v-tooltip.bottom="'Clear all'"
+          class="flex h-7 w-7 items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-zinc-300"
         >
-          Clear all
+          <i class="pi pi-trash text-xs" />
         </button>
       </div>
+    </div>
 
-      <!-- History Grid -->
-      <div v-if="outputs.length" class="flex-1 overflow-y-auto p-4">
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+    <!-- Generations List -->
+    <div class="flex-1 overflow-y-auto p-3">
+      <div class="flex flex-col gap-3">
+        <div
+          v-for="gen in generations"
+          :key="gen.id"
+          class="group rounded-lg border border-zinc-800 bg-zinc-900/50 p-3 transition-colors hover:border-zinc-700"
+        >
+          <!-- Top Row: Status, Time, Batch Info, Actions -->
+          <div class="mb-2 flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span
+                :class="[
+                  'h-1.5 w-1.5 rounded-full',
+                  getStatusColor(gen.status),
+                  gen.status === 'generating' && 'animate-pulse'
+                ]"
+              />
+              <span class="text-[11px] font-medium text-zinc-400">{{ getStatusText(gen.status) }}</span>
+              <span class="text-zinc-700">•</span>
+              <span class="text-[11px] text-zinc-500">{{ formatTime(gen.createdAt) }}</span>
+              <span class="text-zinc-700">•</span>
+              <span class="text-[10px] text-zinc-500">{{ gen.batchSize }} img</span>
+            </div>
+            <div class="flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+              <button
+                v-tooltip.top="'Rerun'"
+                class="flex h-5 w-5 items-center justify-center rounded text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-zinc-300"
+                @click="handleRerun(gen)"
+              >
+                <i class="pi pi-refresh text-[9px]" />
+              </button>
+              <button
+                v-if="gen.images.length > 0"
+                v-tooltip.top="'Download'"
+                class="flex h-5 w-5 items-center justify-center rounded text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-zinc-300"
+                @click="handleDownload(gen)"
+              >
+                <i class="pi pi-download text-[9px]" />
+              </button>
+              <button
+                v-tooltip.top="'Delete'"
+                class="flex h-5 w-5 items-center justify-center rounded text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-red-400"
+                @click="handleDelete(gen.id)"
+              >
+                <i class="pi pi-trash text-[9px]" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Images Grid -->
           <div
-            v-for="output in outputs"
-            :key="output.id"
-            class="group relative aspect-square overflow-hidden rounded-lg bg-zinc-800"
+            v-if="gen.images.length > 0"
+            :class="['mb-2 grid gap-1.5', getGridCols(gen.images.length)]"
           >
-            <img
-              :src="output.thumbnailUrl ?? output.url"
-              :alt="output.filename"
-              class="h-full w-full object-cover transition-transform group-hover:scale-105"
-            />
-
-            <!-- Hover Overlay -->
             <div
-              class="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/80 via-transparent to-black/40 p-2 opacity-0 transition-opacity group-hover:opacity-100"
+              v-for="(img, idx) in gen.images"
+              :key="idx"
+              class="group/img relative aspect-square overflow-hidden rounded bg-zinc-800"
             >
-              <div class="flex justify-end">
+              <img
+                :src="img"
+                alt="Generated image"
+                class="h-full w-full object-cover transition-transform group-hover/img:scale-105"
+              />
+              <!-- Image hover overlay -->
+              <div class="absolute inset-0 flex items-center justify-center gap-1 bg-black/50 opacity-0 transition-opacity group-hover/img:opacity-100">
                 <button
-                  class="flex h-6 w-6 items-center justify-center rounded bg-black/50 text-zinc-300 transition-colors hover:bg-red-600 hover:text-white"
-                  @click="handleDelete(output.id)"
+                  v-tooltip.top="'Download'"
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+                  @click.stop="handleDownload(gen, idx)"
                 >
-                  <i class="pi pi-trash text-[10px]" />
+                  <i class="pi pi-download text-[10px]" />
+                </button>
+                <button
+                  v-tooltip.top="'Expand'"
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+                >
+                  <i class="pi pi-expand text-[10px]" />
                 </button>
               </div>
+            </div>
+          </div>
 
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] text-zinc-300">
-                    {{ formatTime(output.createdAt) }}
-                  </span>
-                  <button
-                    class="flex h-6 w-6 items-center justify-center rounded bg-black/50 text-zinc-300 transition-colors hover:bg-blue-600 hover:text-white"
-                    @click="handleDownload(output)"
-                  >
-                    <i class="pi pi-download text-[10px]" />
-                  </button>
-                </div>
+          <!-- Generating placeholder -->
+          <div
+            v-else-if="gen.status === 'generating'"
+            :class="['mb-2 grid gap-1.5', getGridCols(gen.batchSize)]"
+          >
+            <div
+              v-for="i in gen.batchSize"
+              :key="i"
+              class="flex aspect-square items-center justify-center overflow-hidden rounded bg-zinc-800"
+            >
+              <div class="flex flex-col items-center">
+                <i class="pi pi-spin pi-spinner text-base text-blue-400" />
+                <span class="mt-1 text-[10px] text-zinc-500">{{ gen.progress }}%</span>
               </div>
             </div>
+          </div>
+
+          <!-- Queued placeholder -->
+          <div
+            v-else-if="gen.status === 'queued'"
+            :class="['mb-2 grid gap-1.5', getGridCols(gen.batchSize)]"
+          >
+            <div
+              v-for="i in gen.batchSize"
+              :key="i"
+              class="flex aspect-square items-center justify-center overflow-hidden rounded bg-zinc-800"
+            >
+              <i class="pi pi-clock text-base text-zinc-600" />
+            </div>
+          </div>
+
+          <!-- Progress Bar (for generating) -->
+          <div v-if="gen.status === 'generating'" class="mb-2">
+            <div class="h-1 overflow-hidden rounded-full bg-zinc-800">
+              <div
+                class="h-full rounded-full bg-blue-600 transition-all duration-300"
+                :style="{ width: `${gen.progress}%` }"
+              />
+            </div>
+          </div>
+
+          <!-- Prompt -->
+          <p class="mb-2 line-clamp-2 text-xs leading-relaxed text-zinc-300">
+            {{ gen.prompt }}
+          </p>
+
+          <!-- Parameter Badges -->
+          <div class="flex flex-wrap gap-1">
+            <span class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Workflow</span>
+              <span class="ml-1 text-zinc-300">{{ gen.workflow }}</span>
+            </span>
+            <span class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Mode</span>
+              <span class="ml-1 text-zinc-300">{{ gen.mode }}</span>
+            </span>
+            <span class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Steps</span>
+              <span class="ml-1 text-zinc-300">{{ gen.parameters.steps }}</span>
+            </span>
+            <span class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">CFG</span>
+              <span class="ml-1 text-zinc-300">{{ gen.parameters.cfg }}</span>
+            </span>
+            <span class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Size</span>
+              <span class="ml-1 text-zinc-300">{{ gen.parameters.width }}×{{ gen.parameters.height }}</span>
+            </span>
+            <span class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Seed</span>
+              <span class="ml-1 font-mono text-zinc-300">{{ gen.parameters.seed === -1 ? 'Random' : gen.parameters.seed }}</span>
+            </span>
+            <span v-if="gen.parameters.sampler" class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Sampler</span>
+              <span class="ml-1 text-zinc-300">{{ gen.parameters.sampler }}</span>
+            </span>
+            <span v-if="gen.parameters.model" class="inline-flex items-center rounded bg-zinc-800 px-1.5 py-0.5 text-[10px]">
+              <span class="text-zinc-500">Model</span>
+              <span class="ml-1 text-zinc-300">{{ gen.parameters.model }}</span>
+            </span>
           </div>
         </div>
       </div>
 
-      <!-- Empty History -->
+      <!-- Empty State -->
       <div
-        v-else
-        class="flex flex-1 flex-col items-center justify-center text-zinc-500"
+        v-if="generations.length === 0"
+        class="flex flex-1 flex-col items-center justify-center py-12 text-zinc-500"
       >
-        <i class="pi pi-images mb-2 text-2xl" />
-        <span class="text-xs">No history yet</span>
-        <p class="mt-1 text-center text-[10px] text-zinc-600">
-          Your creations will appear here
+        <i class="pi pi-images mb-2 text-3xl" />
+        <span class="text-sm">No generations yet</span>
+        <p class="mt-1 text-center text-xs text-zinc-600">
+          Start a chat to generate images
         </p>
       </div>
     </div>
   </main>
 </template>
+
+<style scoped>
+div::-webkit-scrollbar {
+  width: 6px;
+}
+
+div::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 3px;
+}
+</style>

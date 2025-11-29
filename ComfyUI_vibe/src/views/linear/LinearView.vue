@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import LinearTopBar from '@/components/linear/LinearTopBar.vue'
 import LinearIconSidebar, { type LinearTab } from '@/components/linear/LinearIconSidebar.vue'
-import LinearCreationPanel from '@/components/linear/LinearCreationPanel.vue'
 import LinearChatPanel from '@/components/linear/LinearChatPanel.vue'
+import LinearWorkflowsPanel from '@/components/linear/LinearWorkflowsPanel.vue'
+import LinearAppsPanel from '@/components/linear/LinearAppsPanel.vue'
+import LinearModelsPanel from '@/components/linear/LinearModelsPanel.vue'
 import LinearHistoryPanel from '@/components/linear/LinearHistoryPanel.vue'
 
-const activeTab = ref<LinearTab>('tool')
+const activeTab = ref<LinearTab>('chat')
 </script>
 
 <template>
@@ -16,14 +18,16 @@ const activeTab = ref<LinearTab>('tool')
 
     <!-- Main Content -->
     <div class="flex flex-1 overflow-hidden">
-      <!-- Left Icon Sidebar (Projects, Chat, Tool, Apps, Workflow) -->
+      <!-- Left Icon Sidebar (Chat, Workflows, Apps) -->
       <LinearIconSidebar v-model:active-tab="activeTab" />
 
       <!-- Left Panel - switches based on active tab -->
       <LinearChatPanel v-if="activeTab === 'chat'" />
-      <LinearCreationPanel v-else />
+      <LinearWorkflowsPanel v-else-if="activeTab === 'workflows'" />
+      <LinearAppsPanel v-else-if="activeTab === 'apps'" />
+      <LinearModelsPanel v-else-if="activeTab === 'models'" />
 
-      <!-- Right Main Area (queue/history) -->
+      <!-- Right Main Area (generations) -->
       <LinearHistoryPanel />
     </div>
   </div>
