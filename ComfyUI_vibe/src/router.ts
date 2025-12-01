@@ -89,13 +89,13 @@ const v2Routes: RouteRecordRaw[] = [
     props: true
   },
   {
-    path: '/create',
-    name: 'linear-create',
+    path: '/linear',
+    name: 'linear',
     component: () => import('./views/linear/LinearView.vue')
   },
   {
-    path: '/:workspaceId/create',
-    name: 'workspace-linear-create',
+    path: '/:workspaceId/linear',
+    name: 'workspace-linear',
     component: () => import('./views/linear/LinearView.vue'),
     props: true
   }

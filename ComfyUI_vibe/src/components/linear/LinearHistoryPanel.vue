@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import LinearCanvasView from './canvas/LinearCanvasView.vue'
+
+type ViewMode = 'list' | 'canvas'
+const viewMode = ref<ViewMode>('list')
 
 interface GenerationItem {
   id: string
@@ -190,13 +194,42 @@ function getGridCols(count: number): string {
 
 <template>
   <main class="flex h-full flex-1 flex-col bg-zinc-950">
-    <!-- Header -->
-    <div class="flex items-center justify-between border-b border-zinc-800 px-4 py-2">
-      <div class="flex items-center gap-3">
-        <span class="text-sm font-medium text-zinc-200">Generations</span>
-        <span class="rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] text-zinc-500">
-          {{ generations.length }}
-        </span>
+    <!-- Header with Tabs -->
+    <div class="flex items-center justify-between border-b border-zinc-800 px-4">
+      <div class="flex items-center gap-1">
+        <!-- Timeline View Tab -->
+        <button
+          :class="[
+            'relative flex items-center gap-2 px-3 py-2.5 text-sm font-medium transition-colors',
+            viewMode === 'list' ? 'text-zinc-200' : 'text-zinc-500 hover:text-zinc-300'
+          ]"
+          @click="viewMode = 'list'"
+        >
+          <i class="pi pi-list text-xs" />
+          Timeline View
+          <span class="rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] text-zinc-500">
+            {{ generations.length }}
+          </span>
+          <span
+            v-if="viewMode === 'list'"
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
+          />
+        </button>
+        <!-- Canvas View Tab -->
+        <button
+          :class="[
+            'relative flex items-center gap-2 px-3 py-2.5 text-sm font-medium transition-colors',
+            viewMode === 'canvas' ? 'text-zinc-200' : 'text-zinc-500 hover:text-zinc-300'
+          ]"
+          @click="viewMode = 'canvas'"
+        >
+          <i class="pi pi-th-large text-xs" />
+          Canvas View
+          <span
+            v-if="viewMode === 'canvas'"
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
+          />
+        </button>
       </div>
       <div class="flex items-center gap-2">
         <button
@@ -208,8 +241,17 @@ function getGridCols(count: number): string {
       </div>
     </div>
 
+    <!-- Canvas View -->
+    <LinearCanvasView
+      v-if="viewMode === 'canvas'"
+      :generations="generations"
+      @rerun="(id: string) => { const gen = generations.find(g => g.id === id); if (gen) handleRerun(gen); }"
+      @download="(id) => { const gen = generations.find(g => g.id === id); if (gen) handleDownload(gen); }"
+      @delete="handleDelete"
+    />
+
     <!-- Generations List -->
-    <div class="flex-1 overflow-y-auto p-3">
+    <div v-else class="flex-1 overflow-y-auto p-3">
       <div class="flex flex-col gap-3">
         <div
           v-for="gen in generations"
